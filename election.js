@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // $('').click(function(){
+    // $('').click(function(){i
       $.ajax({
         url:'https://bb-election-api.herokuapp.com/',
         method:'GET',
@@ -14,10 +14,9 @@ $(document).ready(function() {
         var candidateContainer = $('<ul>');
         // loop through candidates
       for (var i = 0; i < candidates.length; i++){
-        // clark's code
-      // $('<li>').html("Name: " + candidates[i].name + " Votes: " + candidates[i].votes).appendTo
 
-        var button = $("<input type='button' value='newbutton' data-candidate='" + candidates[i]['id'] + "'/>" );
+
+        var button = $("<input type='button' value='newbutton' class='voteButton' data-candidate='" + candidates[i]['id'] + "'/>" );
   // create new li
         var newli = $('<li>');
   // change the parts of li to name and votes, use the i to change on each one
@@ -27,10 +26,33 @@ $(document).ready(function() {
 
   // attached the new li to the entire container
         newli.appendTo(candidateContainer)
+
       // repalce old ul with new ul
       }
 
-      $('#ul-id').html(candidateContainer);
+        $('#ul-id').html(candidateContainer);
+
+        $(".voteButton").click(function(){
+          // var candidateId = $(this).data('candidate')
+          var candidateId = 5
+          console.log(candidateId);
+          $.ajax({
+            url: 'https://bb-election-api.herokuapp.com/vote',
+            method:"POST",
+            data: {id: candidateId},
+            dataType:'json'
+          }).done(function(responseData){
+
+          }).fail(function(data, status, error){
+            console.log(status)
+            if (status === "404") {
+                // console.log("error");
+            }
+
+          })
+
+        });  // });
+
       // candidates.forEach(function(i){
       //   console.log(candidates[i])
       // // });
@@ -38,7 +60,7 @@ $(document).ready(function() {
       //   (button).appendTo(newli);
       //
       // })
+// $(document).ready(function() {
 
-    });
-    // });
+});
 });
